@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import config
@@ -16,10 +17,10 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
 
-    from .main import main as main_bp
+    from app.main import main as main_bp
     app.register_blueprint(main_bp)
 
-    from .auth import auth as auth_blueprint
+    from app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     return app

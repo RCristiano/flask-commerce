@@ -10,10 +10,10 @@ class User(UserMixin, db.Model):
     __table_args__ = {'extend_existing': True}
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
-    password_hash = db.Column(db.String(60), nullable=False)
-    address = db.Column(db.String(20), unique=False, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    address = db.Column(db.String(20), unique=False, nullable=True)
     email = db.Column(db.String(120), nullable=False)
-    phone = db.Column(db.String(20), nullable=False)
+    phone = db.Column(db.String(20), nullable=True)
 
     @property
     def password(self):

@@ -5,7 +5,7 @@ from app.user import User
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     return 'Ok'

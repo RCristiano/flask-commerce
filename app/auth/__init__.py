@@ -8,13 +8,10 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['POST'])
 def login():
-
-    user = User.query.filter_by(email=request.form.get('email').lower()).first()
+    user = User.query.filter_by(email=request.form.get('email')).first()
     if user is not None and user.verify_password(request.form.get('password')):
-        login_user(user)
-        next = request.args.get('next')
-        if next is None or not next.startswith('/'):
-            next = url_for('main.index')
-        return redirect(next)
-    flash('Invalid email or password.')
-    return 'User has not access'
+        login_user(user, request.form.get('remenber_me'))
+        return 'Access granted'
+    x = User.query.all()
+    return jsonify(x[0])
+    # return 'User has not access'
