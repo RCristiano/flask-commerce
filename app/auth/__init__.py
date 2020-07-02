@@ -1,7 +1,7 @@
+from app import db
 from app.user import User
 from flask import Blueprint, request, jsonify
 from flask_login import login_user, login_required, logout_user
-import json
 
 auth = Blueprint('auth', __name__)
 
@@ -25,3 +25,15 @@ def logout():
 @auth.route('/access_denied')
 def access_denied():
     return 'Access denied'
+
+
+@auth.route('/register', methods=['POST'])
+def register():
+    user = User(name=request.form.get('name'),
+                password=request.form.get('password'),
+                address=request.form.get('address'),
+                email=request.form.get('email').lower(),
+                phone=request.form.get('phone'))
+    db.session.add(user)
+    db.session.commit()
+    return jsonify(str(user.id))
