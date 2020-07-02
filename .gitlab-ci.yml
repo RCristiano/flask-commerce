@@ -1,0 +1,78 @@
+variables:
+  IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  PYTHON_VERSION: 3.8.3
+
+stages:
+  - test
+  - build
+  - version
+  - package
+
+env-vars:
+  stage: test
+  script:
+    - TAG=$(git describe --tags --always)variables
+    - echo "export TAG=$TAG" > .variables
+    - echo "export IMAGE=$IMAGE_NAME:$TAG" >> .variables
+    - cat .variables
+    - sed -r -e \s~'version = "*.*.*"'~'version = "'$TAG'"'~g pyproject.toml > tmp.toml
+    - mv tmp.toml pyproject.toml
+    - cat pyproject.toml
+  artifacts:
+    paths:
+      - pyproject.toml
+      - .variables
+
+test:
+  stage: test
+  image: python:${PYTHON_VERSION}-alpine
+  variables:
+    POETRY_HOME: "/etc/poetry"
+    POETRY_VIRTUALENVS_CREATE: "false"
+  before_script:
+    - export PATH=$POETRY_HOME/bin:$PATH
+    - apk add curl
+    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+  script:
+    - poetry install
+    - coverage run -m unittest discover tests/
+    - coverage report -m
+  except:
+    - tags
+
+build:
+  stage: build
+  image: docker:18.06.1-ce
+  services:
+    - docker:dind
+  before_script:
+    - source .variables
+  script:
+    - docker build -t $IMAGE .
+  except:
+    - tags
+
+tag-version:
+  stage: version
+  image: mrooding/gitlab-semantic-versioning:latest
+  script:
+    - python3 /version-update/version-update.py
+  only:
+    - master
+
+registry:
+  stage: package
+  image: docker:18.06.1-ce
+  before_script:
+    - source .variables
+    - mv pyproject.toml pyproject.toml
+  services:
+    - docker:dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE .
+    - docker tag $IMAGE $IMAGE_NAME:latest
+    - docker push $IMAGE
+    - docker push $IMAGE_NAME:latest
+  only:
+    - tags
