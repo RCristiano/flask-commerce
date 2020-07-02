@@ -6,8 +6,9 @@ from config import config
 
 
 db = SQLAlchemy()
+api = Api()
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth.access_denied'
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -16,6 +17,7 @@ def create_app(config_name):
 
     db.init_app(app)
     login_manager.init_app(app)
+    api.init_app(app)
 
     from app.main import main as main_bp
     app.register_blueprint(main_bp)
