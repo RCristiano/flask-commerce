@@ -12,6 +12,6 @@ class Product(db.Model):
     discounted_price = db.Column(db.DECIMAL)
 
     def __repr__(self):
-        return f"Product('{self.productid}','{self.product_name}'," \
+        return f"Product('{self.id}','{self.product_name}'," \
                f"'{self.description}', '{self.image}', '{self.quantity}'," \
                f"'{self.regular_price}', '{self.discounted_price}')"
