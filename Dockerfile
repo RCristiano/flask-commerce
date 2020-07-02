@@ -11,8 +11,7 @@ RUN echo $PATH
 
 RUN apk update && \
     apk add libpq && \
-    apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev && \
-    apk add curl && \
+    apk add --virtual .build-deps curl gcc python3-dev musl-dev postgresql-dev && \
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python && \
     mkdir /code
 
