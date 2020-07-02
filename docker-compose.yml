@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:alpine
+        env_file:
+            - .env
+        ports:
+            - 5432:5432
+        environment:
+            PGDATA: /var/lib/postgresql/data/pgdata
+        volumes:
+            - database_data:/var/lib/postgresql/data
+
+    flask:
+        build: ./
+        env_file:
+            - .env
+        depends_on:
+            - db
+        volumes:
+            - ./:/code
+        ports:
+            - 80:80
+        command: "flask run -h '0.0.0.0' -p 80"
+        environment:
+            DEV_DATABASE_URL: "${DB_ENGINE}://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+volumes:
+    database_data:

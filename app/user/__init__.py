@@ -9,7 +9,7 @@ def load_user(user_id):
 class User(UserMixin, db.Model):
     __table_args__ = {'extend_existing': True}
     user_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(60), nullable=False)
     address = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(120), nullable=False)
