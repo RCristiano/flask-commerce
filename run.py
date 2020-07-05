@@ -12,7 +12,7 @@ migrate = Migrate(app, db)
 
 @app.shell_context_processor
 def make_shell_context():
-    return dict(db=db, User=User, Product=Product, Cart=Cart)
+    return dict(db=db, User=User, Product=Product, Cart=Cart, create_app=create_app)
 
 
 @app.cli.command()
