@@ -23,6 +23,6 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(product_blueprint, url_prefix='/products')
-    app.register_blueprint(cart_blueprint, url_prefix='/carts')
+    app.register_blueprint(cart_blueprint, url_prefix='/cart')
 
     return app

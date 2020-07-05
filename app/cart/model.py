@@ -12,4 +12,4 @@ class Cart(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"Cart('{self.user_id}', '{self.product_id}, '{self.quantity}')"
+        return f"item('{self.user_id}', '{self.product_id}, '{self.quantity}')"
