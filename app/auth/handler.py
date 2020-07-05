@@ -10,20 +10,20 @@ def login():
     user = User.query.filter_by(email=request.form.get('email')).first()
     if user is not None and user.verify_password(request.form.get('password')):
         login_user(user, request.form.get('remember_me'))
-        return jsonify('Access granted')
-    return jsonify('User has not access'), 401
+        return jsonify(msg='Access granted')
+    return jsonify(msg='User has not access'), 401
 
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return jsonify('User has been logged out')
+    return jsonify(msg='User has been logged out')
 
 
 @auth.route('/access_denied')
 def access_denied():
-    return jsonify('Access denied'), 401
+    return jsonify(msg='Access denied'), 401
 
 
 @auth.route('/register', methods=['POST'])

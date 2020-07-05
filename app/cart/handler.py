@@ -7,12 +7,22 @@ from app.user.model import User
 from app.product.model import Product
 
 
+def item_as_dict(item):
+    product = Product.query.filter_by(id=item.product_id).first()
+    return {"item_id": item.product_id,
+            "product_name": product.product_name,
+            "image": product.image,
+            "price": str(product.regular_price),
+            "discounted": str(product.discounted_price),
+            "quantity": item.quantity}
+
+
 @cart.route('/user_cart')
 @login_required
 def get_by_user(id: int = False):
     user_id = id if id else User.get_id(current_user)
     cart = Cart.query.filter_by(user_id=user_id).all()
-    return jsonify(str(cart))
+    return jsonify([item_as_dict(item) for item in cart])
 
 
 @cart.route('/manage_cart', methods=['POST'])
@@ -23,24 +33,24 @@ def manage_cart():
     quantity = int(request.form.get('quantity'))
     stock = int(Product.query.filter_by(id=product_id).first().quantity)
     if not stock:
-        return jsonify({'msg': 'Out of stock'}), 400
+        return jsonify(msg='Out of stock'), 400
     item = Cart.query.filter_by(user_id=user_id,
                                 product_id=product_id).first()
     if item:
         if not quantity:
             db.session.delete(item)
             db.session.commit()
-            return jsonify({'msg': 'Item has been removed'})
+            return jsonify(msg='Item has been removed')
         item.quantity = quantity
     else:
         if not quantity:
-            return jsonify({'msg': 'Quantity invalid'}), 400
+            return jsonify(msg='Quantity invalid'), 400
         item = Cart(user_id=user_id,
                     product_id=product_id,
                     quantity=quantity)
     if quantity > stock:
-        return jsonify({'msg': 'Out of stock for this quantity'}), 400
+        return jsonify(msg='Out of stock for this quantity'), 400
     db.session.add(item)
     db.session.commit()
     cart = Cart.query.filter_by(user_id=user_id).all()
-    return jsonify(str(cart))
+    return jsonify([item_as_dict(item) for item in cart])
