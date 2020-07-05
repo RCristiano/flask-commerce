@@ -5,11 +5,21 @@ from app.product import product
 from app.product.model import Product
 
 
+def product_as_dict(product):
+    return {"product_id": product.id,
+            "product_name": product.product_name,
+            "description": product.description,
+            "image": product.image,
+            "price": str(product.regular_price),
+            "discounted": str(product.discounted_price),
+            "in_stock": product.quantity}
+
+
 @product.route('/')
 @login_required
 def get_all():
     products = Product.query.all()
-    return jsonify(str(products))
+    return jsonify([product_as_dict(product) for product in products])
 
 
 @product.route('/<int:id>', methods=['GET'])
@@ -17,8 +27,8 @@ def get_all():
 def get_by(id: int):
     product = Product.query.filter_by(id=id).first()
     if product is not None:
-        return jsonify(str(product))
-    return jsonify('Product not found'), 404
+        return jsonify(product_as_dict(product))
+    return jsonify(msg='Product not found'), 404
 
 @product.route('/register', methods=['POST'])
 @login_required
@@ -31,7 +41,7 @@ def register():
                       discounted_price=request.form.get('discounted_price'))
     db.session.add(product)
     db.session.commit()
-    return jsonify(str(product.id))
+    return jsonify(product_as_dict(product))
 
 
 @product.route('/update/<int:id>', methods=['PUT', 'PATCH'])
@@ -39,7 +49,7 @@ def register():
 def update(id: int):
     product = Product.query.filter_by(id=id).first()
     if product == None:
-        return jsonify('Product not found'), 404
+        return jsonify(msg='Product not found'), 404
     product.product_name = request.form.get('product_name') \
         or product.product_name
     product.description = request.form.get('description') \
@@ -54,7 +64,7 @@ def update(id: int):
         or product.discounted_price
     db.session.add(product)
     db.session.commit()
-    return jsonify(str(product))
+    return jsonify(product_as_dict(product))
 
 
 @product.route('/remove', methods=['DELETE'])
@@ -62,7 +72,7 @@ def update(id: int):
 def remove():
     product = Product.query.filter_by(id=request.form.get('id')).first()
     if product == None:
-        return jsonify('Product not found'), 404
+        return jsonify(msg='Product not found'), 404
     db.session.delete(product)
     db.session.commit()
-    return jsonify('Product has been removed')
+    return jsonify(msg='Product has been removed')
