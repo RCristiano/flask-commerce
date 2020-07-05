@@ -53,3 +53,13 @@ Execução do script de versionamento, para mais informações sobre como o scri
 
 #### registry
 Build da imagem Docker final, `push` para o repositório com a `tag`gerada e atualização da imagem com `tag` *latest*.
+
+# Run
+
+## 
+
+# TODO
+
+- [ ] Doc
+  - [ ] Flasgger ?
+- [ ] Cart CRUD
