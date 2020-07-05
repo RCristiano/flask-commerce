@@ -1,17 +1,19 @@
 from flask import request, jsonify
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_required
 from app import db
 from app.product import product
 from app.product.model import Product
 
 
 @product.route('/')
+@login_required
 def get_all():
     products = Product.query.all()
     return jsonify(str(products))
 
 
 @product.route('/<int:id>', methods=['GET'])
+@login_required
 def get_by(id: int):
     product = Product.query.filter_by(id=id).first()
     if product is not None:
@@ -19,6 +21,7 @@ def get_by(id: int):
     return jsonify('Product not found'), 404
 
 @product.route('/register', methods=['POST'])
+@login_required
 def register():
     product = Product(product_name=request.form.get('product_name'),
                       description=request.form.get('description'),
@@ -32,6 +35,7 @@ def register():
 
 
 @product.route('/update/<int:id>', methods=['PUT', 'PATCH'])
+@login_required
 def update(id: int):
     product = Product.query.filter_by(id=id).first()
     if product == None:
@@ -54,6 +58,7 @@ def update(id: int):
 
 
 @product.route('/remove', methods=['DELETE'])
+@login_required
 def remove():
     product = Product.query.filter_by(id=request.form.get('id')).first()
     if product == None:
