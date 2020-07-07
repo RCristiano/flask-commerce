@@ -1,6 +1,16 @@
 from app import db
 
 
+def product_as_dict(product):
+    return {"product_id": product.id,
+            "product_name": product.product_name,
+            "description": product.description,
+            "image": product.image,
+            "price": format(product.regular_price, '.2f'),
+            "discounted": format(product.discounted_price, '.2f'),
+            "in_storage": product.quantity}
+
+
 class Product(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
