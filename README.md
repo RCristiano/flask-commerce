@@ -65,6 +65,10 @@ flask run -h '0.0.0.0' -p 80
 
 With application runing access http://localhost/apidocs/
 
+## Heroku
+
+https://flask-commerce.herokuapp.com/
+
 ## TODO
 
 - [x] Endpoints documentation
