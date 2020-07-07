@@ -6,6 +6,18 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SWAGGER = {
+        "info": {
+            "title": "Flask-commerce",
+            "description": "A simple REST API for e-commerce made with Flask",
+            "contact": {
+                "responsibleDeveloper": "Rodrigo Cristiano",
+                "email": "rcristianofv@hotmail.com",
+                "url": "https://gitlab.com/rcristiano/flask-commerce",
+            },
+            "version": "1.1.0"
+        }
+    }
 
     @staticmethod
     def init_app(app):

@@ -2,22 +2,33 @@ from flask import request, jsonify
 from flask_login import login_required
 from app import db
 from app.product import product
-from app.product.model import Product
-
-
-def product_as_dict(product):
-    return {"product_id": product.id,
-            "product_name": product.product_name,
-            "description": product.description,
-            "image": product.image,
-            "price": str(product.regular_price),
-            "discounted": str(product.discounted_price),
-            "in_stock": product.quantity}
+from app.product.model import Product, product_as_dict
 
 
 @product.route('/')
 @login_required
 def get_all():
+    """List products
+    List all products in store
+    ---
+    security:
+        - cookieAuth: []
+    tags:
+        - Product
+    produces:
+        - application/json
+    responses:
+        200:
+            description: List of all products.
+            schema:
+                type: array
+                items:
+                    $ref: '#/definitions/Product'
+        401:
+            $ref: '#/definitions/Unauthorized'
+        default:
+            description: Unexpected error.
+    """
     products = Product.query.all()
     return jsonify([product_as_dict(product) for product in products])
 
@@ -25,6 +36,60 @@ def get_all():
 @product.route('/<int:id>', methods=['GET'])
 @login_required
 def get_by(id: int):
+    """List products
+    List all products in storage
+    ---
+    security:
+        - cookieAuth: []
+    tags:
+        - Product
+    produces:
+        - application/json
+    parameters:
+      - id: id
+        name: id
+        in: path
+        type: integer
+        required: true
+        example: 1
+    definitions:
+        Product:
+            type: object
+            description: describe
+            properties:
+                product_id:
+                    type: integer
+                product_name:
+                    type: string
+                description:
+                    type: string
+                image:
+                    type: string
+                in_storage:
+                    type: integer
+                regular_price:
+                    type: string
+                    format: double
+                discounted_price:
+                    type: string
+                    format: double
+    responses:
+        200:
+            description: List of all products.
+            schema:
+                $ref: '#/definitions/Product'
+        401:
+            $ref: '#/definitions/Unauthorized'
+        404:
+            description: Product not found
+            schema:
+                allOf:
+                - $ref: '#/definitions/ApiResponse'
+                example:
+                    msg: Product not found
+        default:
+            description: Unexpected error.
+    """
     product = Product.query.filter_by(id=id).first()
     if product is not None:
         return jsonify(product_as_dict(product))

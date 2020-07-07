@@ -2,19 +2,9 @@ from flask import request, jsonify
 from flask_login import login_required, current_user
 from app import db
 from app.cart import cart
-from app.cart.model import Cart
+from app.cart.model import Cart, item_as_dict
 from app.user.model import User
 from app.product.model import Product
-
-
-def item_as_dict(item):
-    product = Product.query.filter_by(id=item.product_id).first()
-    return {"item_id": item.product_id,
-            "product_name": product.product_name,
-            "image": product.image,
-            "price": str(product.regular_price),
-            "discounted": str(product.discounted_price),
-            "quantity": item.quantity}
 
 
 @cart.route('/user_cart')
@@ -31,9 +21,9 @@ def manage_cart():
     user_id = User.get_id(current_user)
     product_id= request.form.get('product_id')
     quantity = int(request.form.get('quantity'))
-    stock = int(Product.query.filter_by(id=product_id).first().quantity)
-    if not stock:
-        return jsonify(msg='Out of stock'), 400
+    storage = int(Product.query.filter_by(id=product_id).first().quantity)
+    if not storage:
+        return jsonify(msg='Out of storage'), 400
     item = Cart.query.filter_by(user_id=user_id,
                                 product_id=product_id).first()
     if item:
@@ -48,8 +38,8 @@ def manage_cart():
         item = Cart(user_id=user_id,
                     product_id=product_id,
                     quantity=quantity)
-    if quantity > stock:
-        return jsonify(msg='Out of stock for this quantity'), 400
+    if quantity > storage:
+        return jsonify(msg='Out of storage for this quantity'), 400
     db.session.add(item)
     db.session.commit()
     cart = Cart.query.filter_by(user_id=user_id).all()
