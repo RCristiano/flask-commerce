@@ -61,8 +61,14 @@ poetry install
 flask run -h '0.0.0.0' -p 80
 ```
 
+## Flasgger - Swagger endpoints documentation
+
+With application runing access http://localhost/apidocs/
+
 ## TODO
 
-- [ ] Endpoints documentation
-  - [ ] Flasgger ?
+- [x] Endpoints documentation
+  - [x] Flasgger ?
 - [x] Cart manager
+- [ ] Implement schema validation with Cerberus
+- [ ] Improve authentication security with JWT / OAuth2
