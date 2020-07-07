@@ -9,7 +9,7 @@ from app.user import User
 
 @auth.route('/login', methods=['POST'])
 def login():
-    """Login page
+    """Login
     Authenticate the user with e-mail and password.
     ---
     tags:
@@ -24,22 +24,9 @@ def login():
                 type: apiKey
                 in: cookie
                 name: session
-    definitions:
-        Email:
-            name: email
-            in: formData
-            type: string
-            required: true
-            example: email@email.com
-        Password:
-            name: password
-            in: formData
-            type: string
-            required: true
-            example: password
     parameters:
-        - $ref: "#/definitions/Email"
-        - $ref: "#/definitions/Password"
+        - $ref: "#/definitions/User/properties/Email"
+        - $ref: "#/definitions/User/properties/Password"
     responses:
         200:
             description: Access granted message.
@@ -132,8 +119,8 @@ def access_denied():
 
 @auth.route('/register', methods=['POST'])
 def register():
-    """Login page
-    Authenticate the user with e-mail and password.
+    """Register user
+    Register a new user.
     ---
     tags:
         - Authentication
@@ -142,30 +129,46 @@ def register():
     produces:
         - application/json
     definitions:
-        Name:
-            name: name
-            in: formData
-            type: string
-            required: true
-            example: Rodrigo
-        Address:
-            name: address
-            in: formData
-            type: string
-            required: false
-            example: Street 1
-        Phone:
-            name: phone
-            in: formData
-            type: string
-            required: false
-            example: 5555-5555
+        User:
+            type: object
+            description: User model
+            properties:
+                Email:
+                    name: email
+                    in: formData
+                    type: string
+                    required: true
+                    example: email@email.com
+                Password:
+                    name: password
+                    in: formData
+                    type: string
+                    required: true
+                    example: password
+                Name:
+                    name: name
+                    in: formData
+                    type: string
+                    required: true
+                    example: Rodrigo
+                Address:
+                    name: address
+                    in: formData
+                    type: string
+                    required: false
+                    example: Street 1
+                Phone:
+                    name: phone
+                    in: formData
+                    type: string
+                    required: false
+                    example: 5555-5555
     parameters:
-        - $ref: "#/definitions/Name"
-        - $ref: "#/definitions/Email"
-        - $ref: "#/definitions/Password"
-        - $ref: "#/definitions/Address"
-        - $ref: "#/definitions/Phone"
+        - $ref: "#/definitions/User/properties/Name"
+        - $ref: "#/definitions/User/properties/Email"
+        - $ref: "#/definitions/User/properties/Password"
+        - $ref: "#/definitions/User/properties/Address"
+        - $ref: "#/definitions/User/properties/Phone"
     responses:
         200:
             description: User registred.
@@ -175,12 +178,12 @@ def register():
                 example:
                     msg: User has been successfully registered
         400:
-            description: Message for when parameters are wrong.
+            description: Message for when parameters are wrong or missing.
             schema:
                 allOf:
                 - $ref: '#/definitions/ApiResponse'
                 example:
-                    msg: Required fields are missing
+                    msg: Invalid fields or missing fields
         default:
             description: Unexpected error.
     """
@@ -194,4 +197,4 @@ def register():
         db.session.commit()
         return jsonify(msg='User has been successfully registered'), 201
     except (IntegrityError, TypeError, AttributeError):
-        return jsonify(msg='Required fields are missing'), 400
+        return jsonify(msg='Invalid fields or missing fields'), 400

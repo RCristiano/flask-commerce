@@ -1,5 +1,4 @@
 from app import db
-from app.user import User
 from app.product import Product
 
 
