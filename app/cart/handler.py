@@ -37,7 +37,7 @@ def get_by_user(id: int = False):
     """
     user_id = id if id else User.get_id(current_user)
     cart = Cart.query.filter_by(user_id=user_id).all()
-    return jsonify([item_as_dict(item) for item in cart])
+    return jsonify(str(cart))
 
 
 @cart.route('/manage_cart', methods=['POST', 'PUT', 'PATCH'])
@@ -96,11 +96,11 @@ def manage_cart():
         if not quantity:
             db.session.delete(item)
             db.session.commit()
-            return jsonify(msg='Item has been removed')
+            return jsonify({'msg': 'Item has been removed'})
         item.quantity = quantity
     else:
         if not quantity:
-            return jsonify(msg='Quantity invalid'), 400
+            return jsonify({'msg': 'Quantity invalid'}), 400
         item = Cart(user_id=user_id,
                     product_id=product_id,
                     quantity=quantity)
@@ -109,4 +109,4 @@ def manage_cart():
     db.session.add(item)
     db.session.commit()
     cart = Cart.query.filter_by(user_id=user_id).all()
-    return jsonify([item_as_dict(item) for item in cart])
+    return jsonify(str(cart))
