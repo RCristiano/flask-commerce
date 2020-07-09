@@ -1,7 +1,6 @@
 # Flask-commerce
 
-[![pipeline status](https://gitlab.com/rcristiano/flask-commerce/badges/master/pipeline.svg)](https://gitlab.com/rcristiano/flask-commerce/commits/master)  [![coverage report](https://gitlab.com/rcristiano/flask-commerce/badges/master/coverage.svg)](https://gitlab.com/rcristiano/flask-commerce/-/commits/master)
-
+[![pipeline status](https://gitlab.com/rcristiano/flask-commerce/badges/master/pipeline.svg)](https://gitlab.com/rcristiano/flask-commerce/commits/master)  [![coverage report](https://gitlab.com/rcristiano/flask-commerce/badges/master/coverage.svg)](https://gitlab.com/rcristiano/flask-commerce/-/commits/master)  [![Heroku](https://heroku-badge.herokuapp.com/?app=flask-commerce&style=flat&svg=1&root=apidocs)](https://flask-commerce.herokuapp.com/apidocs/)
 
 A simple REST API for e-commerce made with Flask
 
@@ -62,6 +61,8 @@ flask run -h '0.0.0.0' -p 80
 ```
 
 ## Flasgger - Swagger endpoints documentation
+
+https://flask-commerce.herokuapp.com/apidocs/
 
 With application runing access http://localhost/apidocs/
 
