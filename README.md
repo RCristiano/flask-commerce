@@ -75,7 +75,7 @@ https://flask-commerce.herokuapp.com/
 - [x] Endpoints documentation
   - [x] Flasgger ?
 - [x] Cart manager
-- [ ] Heroku
+- [x] Heroku
 - [ ] AWS
 - [ ] Google Cloud
 - [ ] Implement schema validation with Cerberus
