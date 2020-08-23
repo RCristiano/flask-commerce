@@ -76,6 +76,7 @@ https://flask-commerce.herokuapp.com/
   - [x] Flasgger ?
 - [x] Cart manager
 - [x] Heroku
+  - [ ] CI/CD to deploy to Heroku with gitlab CI/CD
 - [ ] AWS
 - [ ] Google Cloud
 - [ ] Implement schema validation with Cerberus
