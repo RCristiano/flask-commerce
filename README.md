@@ -54,10 +54,8 @@ With `poetry` and `pyenv` installed, install python 3.8.3 with pyenv:
 Then start the app with:
 
 ```sh
-export $(cat .env | xargs)
-export DEV_DATABASE_URL="${DB_ENGINE}://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}"
 poetry install
-flask run -h '0.0.0.0' -p 80
+flask run -h '0.0.0.0' -p 8080
 ```
 
 ## Flasgger - Swagger endpoints documentation
