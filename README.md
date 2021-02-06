@@ -28,7 +28,8 @@ To run tests, you have to access the *flask* service. This can be done using the
 ```sh
 docker-compose exec flask sh
 /code# poetry install
-/code# coverage run -m unittest discover tests/
+/code# coverage run
+/code# coverage report
 ```
 
 ### Local
@@ -54,10 +55,8 @@ With `poetry` and `pyenv` installed, install python 3.8.3 with pyenv:
 Then start the app with:
 
 ```sh
-export $(cat .env | xargs)
-export DEV_DATABASE_URL="${DB_ENGINE}://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}"
 poetry install
-flask run -h '0.0.0.0' -p 80
+flask run -h '0.0.0.0' -p 8080
 ```
 
 ## Flasgger - Swagger endpoints documentation
@@ -69,14 +68,3 @@ With application runing access http://localhost/apidocs/
 ## Heroku
 
 https://flask-commerce.herokuapp.com/
-
-## TODO
-
-- [x] Endpoints documentation
-  - [x] Flasgger ?
-- [x] Cart manager
-- [x] Heroku
-- [ ] AWS
-- [ ] Google Cloud
-- [ ] Implement schema validation with Cerberus
-- [ ] Improve authentication security with JWT / OAuth2
