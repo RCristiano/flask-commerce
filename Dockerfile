@@ -15,8 +15,10 @@ RUN apk update && \
 
 WORKDIR /code
 
-COPY . .
+COPY poetry.lock pyproject.toml ./
 
 RUN poetry install --no-dev
 
 RUN apk del .build-deps
+
+COPY app migrations ./
