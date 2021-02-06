@@ -28,7 +28,8 @@ To run tests, you have to access the *flask* service. This can be done using the
 ```sh
 docker-compose exec flask sh
 /code# poetry install
-/code# coverage run -m unittest discover tests/
+/code# coverage run
+/code# coverage report
 ```
 
 ### Local
