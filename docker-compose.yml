@@ -7,6 +7,8 @@ services:
         volumes:
             - database_data:/var/lib/postgresql/data
         command: -p ${POSTGRES_PORT}
+        ports:
+            - "${POSTGRES_PORT}:${POSTGRES_PORT}"
 
     flask:
         build: .
@@ -15,10 +17,10 @@ services:
         volumes:
             - .:/code
         ports:
-            - 80:80
+            - 5000:5000
         command:
             sh -c "flask db upgrade &&
-            flask run -h '0.0.0.0' -p 80"
+            flask run -h '0.0.0.0' -p 5000"
         environment:
             DEV_DATABASE_URL: 
                 "${DB_ENGINE}://\
