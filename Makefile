@@ -6,8 +6,8 @@ coverage:
 	@coverage html
 	@coverage xml
 
-requirements:
-	@poetry export -f requirements.txt --output requirements.txt
+heroku:
+	@poetry export -E heroku -f requirements.txt --output requirements.txt
 
 clean:
 	@find . -name '__pycache__'  -exec rm -rf {} +
