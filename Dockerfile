@@ -21,4 +21,9 @@ RUN poetry install --no-dev
 
 RUN apk del .build-deps
 
-COPY app migrations ./
+COPY migrations migrations
+
+COPY run.py config.py .env ./
+
+COPY app app
+

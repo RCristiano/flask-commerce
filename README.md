@@ -56,14 +56,14 @@ Then start the app with:
 
 ```sh
 poetry install
-flask run -h '0.0.0.0' -p 8080
+flask run -h '0.0.0.0' -p 5000
 ```
 
 ## Flasgger - Swagger endpoints documentation
 
 https://flask-commerce.herokuapp.com/apidocs/
 
-With application runing access http://localhost/apidocs/
+With application runing access http://localhost:5000/apidocs/
 
 ## Heroku
 
