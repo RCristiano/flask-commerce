@@ -26,4 +26,3 @@ COPY migrations migrations
 COPY run.py config.py .env ./
 
 COPY app app
-

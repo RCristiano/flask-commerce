@@ -15,7 +15,7 @@ env-vars:
     - echo "export TAG=$TAG" > .variables
     - echo "export IMAGE=$IMAGE_NAME:$TAG" >> .variables
     - cat .variables
-    - sed -r -e \s~'version = "*.*.*"'~'version = "'$TAG'"'~g pyproject.toml > tmp.toml
+    - sed '0,/version/{s/version = ".*"/version = "'$TAG'"/}' pyproject.toml > tmp.toml
     - mv tmp.toml pyproject.toml
     - cat pyproject.toml
   artifacts:
