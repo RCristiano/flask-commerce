@@ -19,7 +19,7 @@ class Config:
                 "email": "rcristianofv@hotmail.com",
                 "url": "https://gitlab.com/rcristiano/flask-commerce",
             },
-            "version": "1.1.0"
+            "version": os.environ.get('TAG') or '0.1.0'
         }
     }
 

@@ -26,4 +26,4 @@ build-backend = "poetry.masonry.api"
 
 [tool.coverage.run]
 source = ["."]
-command_line = "-m unittest"
+command_line = "-m unittest discover tests/"
