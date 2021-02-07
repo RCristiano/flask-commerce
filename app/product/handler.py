@@ -212,7 +212,7 @@ def update(id: int):
             description: Unexpected error.
     """
     product = Product.query.filter_by(id=id).first()
-    if product == None:
+    if product is None:
         return jsonify(msg='Product not found'), 404
     try:
         product.product_name = request.form.get('product_name') \
@@ -274,7 +274,7 @@ def remove():
             description: Unexpected error.
     """
     product = Product.query.filter_by(id=request.form.get('id')).first()
-    if product == None:
+    if product is None:
         return jsonify(msg='Product not found'), 404
     db.session.delete(product)
     db.session.commit()
