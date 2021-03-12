@@ -68,3 +68,10 @@ With application runing access http://localhost:5000/apidocs/
 ## Heroku
 
 https://flask-commerce.herokuapp.com/
+
+### Heroku Config Vars
+
+    DATABASE_URL    # Complete url from postgres Dyno
+    FLASK_APP       # run.py
+    FLASK_CONFIG    # development | testing | production
+    LOG_TO_STDOUT   # 1
