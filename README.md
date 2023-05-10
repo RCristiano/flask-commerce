@@ -1,6 +1,6 @@
 # Flask-commerce
 
-[![pipeline status](https://gitlab.com/rcristiano/flask-commerce/badges/master/pipeline.svg)](https://gitlab.com/rcristiano/flask-commerce/commits/master)  [![coverage report](https://gitlab.com/rcristiano/flask-commerce/badges/master/coverage.svg)](https://gitlab.com/rcristiano/flask-commerce/-/commits/master)  [![Heroku](https://heroku-badge.herokuapp.com/?app=flask-commerce&style=flat&svg=1&root=apidocs)](https://flask-commerce.herokuapp.com/apidocs/)
+[![pipeline status](https://gitlab.com/rcristiano/flask-commerce/badges/master/pipeline.svg)](https://gitlab.com/rcristiano/flask-commerce/commits/master) [![coverage report](https://gitlab.com/rcristiano/flask-commerce/badges/master/coverage.svg)](https://gitlab.com/rcristiano/flask-commerce/-/commits/master)
 
 A simple REST API for e-commerce made with Flask
 
@@ -23,7 +23,7 @@ Run `docker-compose up -d` to start all services.
 
 #### Tests
 
-To run tests, you have to access the *flask* service. This can be done using the following command:
+To run tests, you have to access the _flask_ service. This can be done using the following command:
 
 ```sh
 docker-compose exec flask sh
@@ -47,7 +47,6 @@ docker-compose exec flask sh
 
 > Change necessary variables in `.env` to connect with your `PostgreSQL` server
 
-
 With `poetry` and `pyenv` installed, install python 3.8.3 with pyenv:
 
 `pyenv install 3.8.3`
@@ -67,9 +66,7 @@ With application runing access http://localhost:5000/apidocs/
 
 ## Heroku
 
-https://flask-commerce.herokuapp.com/
-
-### Heroku Config Vars
+Heroku Config Vars
 
     DATABASE_URL    # Complete url from postgres Dyno
     FLASK_APP       # run.py
