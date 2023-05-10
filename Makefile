@@ -1,4 +1,4 @@
-.PHONY: help run coverage clean
+.PHONY: help run coverage clean requirements poetry
 
 help:
 	@echo "    run"
@@ -7,8 +7,16 @@ help:
 	@echo "        Run the project coverage."
 	@echo "    clean"
 	@echo "        Remove cache files."
+	@echo "    requirements"
+	@echo "        Update requirements.txt file."
 
-run:
+poetry:
+	@poetry install
+
+requirements: poetry;
+	@poetry export -f requirements.txt -o requirements.txt
+
+run: poetry;
 	@poetry run flask run -h '0.0.0.0' -p 5000
 
 coverage:
